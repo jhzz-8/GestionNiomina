@@ -14,7 +14,6 @@ public abstract class Empleado {
         this.edad = edad;
         this.categoria = categoria;
 
-        // Validaciones con mensajes en pantalla
         if (salarioBase < 0) {
             System.out.println("Error: Salario negativo. Se asignará 0.");
             this.salarioBase = 0;
