@@ -8,41 +8,27 @@ public abstract class Empleado {
     protected float descuentoPension;
 
     public Empleado(String nombre, String documento, int edad, float salarioBase, 
-                    CategoriaEmpleado categoria, float descuentoSalud, float descuentoPension) {
-        
+                    CategoriaEmpleado categoria, float dSalud, float dPension) {
         this.nombre = nombre;
         this.documento = documento;
         this.edad = edad;
         this.categoria = categoria;
 
-        // Validación de salario base [cite: 81]
+        // Validaciones con mensajes en pantalla
         if (salarioBase < 0) {
-            System.out.println("Error: El salario base no puede ser negativo. Se asignará 0.");
+            System.out.println("Error: Salario negativo. Se asignará 0.");
             this.salarioBase = 0;
         } else {
             this.salarioBase = salarioBase;
         }
 
-        // Validación de descuentos (0 a 100) [cite: 83, 84]
-        if (descuentoSalud < 0 || descuentoSalud > 100) {
-            System.out.println("Error: Descuento de salud inválido. Se asignará 0%.");
-            this.descuentoSalud = 0;
-        } else {
-            this.descuentoSalud = descuentoSalud;
-        }
-
-        if (descuentoPension < 0 || descuentoPension > 100) {
-            System.out.println("Error: Descuento de pensión inválido. Se asignará 0%.");
-            this.descuentoPension = 0;
-        } else {
-            this.descuentoPension = descuentoPension;
-        }
+        this.descuentoSalud = (dSalud < 0 || dSalud > 100) ? 0 : dSalud;
+        this.descuentoPension = (dPension < 0 || dPension > 100) ? 0 : dPension;
     }
 
-    public abstract float calcularSalarioBruto(); [cite: 27]
+    public abstract float calcularSalarioBruto();
 
     public float calcularBonificacionCategoria() {
-        // Lógica de bonificación según categoría [cite: 37, 38, 39]
         return switch (categoria) {
             case JUNIOR -> salarioBase * 0.05f;
             case SEMI_SENIOR -> salarioBase * 0.10f;
@@ -50,23 +36,26 @@ public abstract class Empleado {
         };
     }
 
-    public float calcularDescuentos() { [cite: 29]
-        float bruto = calcularSalarioBruto();
-        return bruto * ((descuentoSalud + descuentoPension) / 100);
+    public float calcularDescuentos() {
+        return calcularSalarioBruto() * ((descuentoSalud + descuentoPension) / 100);
     }
 
-    public float calcularSalarioNeto() { [cite: 30]
+    public float calcularSalarioNeto() {
         return calcularSalarioBruto() - calcularDescuentos();
     }
 
-    public ResumenPago generarResumenPago() { [cite: 101]
+    public ResumenPago generarResumenPago() {
         return new ResumenPago(
-            this.documento,
-            this.nombre,
+            documento, 
+            nombre, 
             this.getClass().getSimpleName(),
-            calcularSalarioBruto(),
-            calcularDescuentos(),
+            calcularSalarioBruto(), 
+            calcularDescuentos(), 
             calcularSalarioNeto()
         );
+    }
+
+    public void mostrarInformacion() {
+        System.out.println("ID: " + documento + " | Nombre: " + nombre + " | Neto: $" + calcularSalarioNeto());
     }
 }
