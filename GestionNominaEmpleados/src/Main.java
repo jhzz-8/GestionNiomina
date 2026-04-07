@@ -21,27 +21,13 @@ public class Main {
             if (opcion >= 1 && opcion <= 3) {
                 String nom = JOptionPane.showInputDialog("Nombre:");
                 String doc = JOptionPane.showInputDialog("Documento:");
-                int edad = Integer.parseInt(JOptionPane.showInputDialog("Edad:"));
-                float sb = Float.parseFloat(JOptionPane.showInputDialog("Salario Base:"));
-                int catIdx = Integer.parseInt(JOptionPane.showInputDialog("Categoría (0:JUNIOR, 1:SEMI_SENIOR, 2:SENIOR):"));
-                CategoriaEmpleado cat = CategoriaEmpleado.values()[catIdx];
-                float ds = Float.parseFloat(JOptionPane.showInputDialog("Salud %:"));
-                float dp = Float.parseFloat(JOptionPane.showInputDialog("Pensión %:"));
 
                 if (opcion == 1) {
                     String cargo = JOptionPane.showInputDialog("Cargo:");
-                    int he = Integer.parseInt(JOptionPane.showInputDialog("Horas Extra:"));
-                    float vhe = Float.parseFloat(JOptionPane.showInputDialog("Valor H.E:"));
-                    float at = Float.parseFloat(JOptionPane.showInputDialog("Auxilio Transporte:"));
-                    empresa.agregarEmpleado(new EmpleadoPlanta(nom, doc, edad, sb, cat, ds, dp, cargo, he, vhe, at));
                 } else if (opcion == 2) {
                     float vt = Float.parseFloat(JOptionPane.showInputDialog("Ventas Totales:"));
-                    float pc = Float.parseFloat(JOptionPane.showInputDialog("Comisión %:"));
-                    empresa.agregarEmpleado(new EmpleadoVentas(nom, doc, edad, sb, cat, ds, dp, vt, pc));
                 } else if (opcion == 3) {
                     int dt = Integer.parseInt(JOptionPane.showInputDialog("Días Trabajados:"));
-                    float vd = Float.parseFloat(JOptionPane.showInputDialog("Valor Día:"));
-                    empresa.agregarEmpleado(new EmpleadoTemporal(nom, doc, edad, sb, cat, ds, dp, dt, vd));
                 }
             } else if (opcion == 4) {
                 empresa.listarTodos();
