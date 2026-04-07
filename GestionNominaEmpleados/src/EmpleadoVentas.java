@@ -9,7 +9,6 @@ public class EmpleadoVentas extends Empleado {
         
         this.totalVentas = totalVentas;
 
-        // Validación de porcentaje de comisión (0 a 100) [cite: 85]
         if (porcentajeComision < 0 || porcentajeComision > 100) {
             System.out.println("Error: Comisión fuera de rango. Se asignará 0%.");
             this.porcentajeComision = 0;
