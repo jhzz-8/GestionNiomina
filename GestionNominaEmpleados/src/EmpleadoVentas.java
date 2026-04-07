@@ -19,8 +19,8 @@ public class EmpleadoVentas extends Empleado {
     }
 
     @Override
-    public float calcularSalarioBruto() { [cite: 60]
-        float comision = totalVentas * (porcentajeComision / 100); [cite: 65]
-        return salarioBase + calcularBonificacionCategoria() + comision; [cite: 61, 62, 63]
+    public float calcularSalarioBruto() { 
+        float comision = totalVentas * (porcentajeComision / 100); 
+        return salarioBase + calcularBonificacionCategoria() + comision;
     }
 }
