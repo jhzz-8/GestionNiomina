@@ -1,52 +1,28 @@
-import java.util.ArrayList;
+import java.util.*;
 
-public class Empresa {
+class Empresa {
+    private List<Empleado> empleados = new ArrayList<>();
 
-    private ArrayList<Empleado> empleados = new ArrayList<>();
-
-    public void agregarEmpleado(Empleado e) {
-        empleados.add(e);
+    public void agregarEmpleado(Empleado e) { empleados.add(e); }
+    
+    public void listarTodos() { 
+        if(empleados.isEmpty()) System.out.println("No hay empleados.");
+        else empleados.forEach(Empleado::mostrarInformacion); 
     }
 
-    public void mostrarEmpleados() {
-        for (Empleado e : empleados) {
-            e.mostrarInformacion();
-            System.out.println("----------------");
-        }
+    public Empleado buscarPorDoc(String doc) {
+        return empleados.stream().filter(e -> e.documento.equals(doc)).findFirst().orElse(null);
     }
 
-    public Empleado buscarPorDocumento(String doc) {
-        for (Empleado e : empleados) {
-            if (e.documento.equals(doc)) {
-                return e;
-            }
-        }
-        return null;
+    public Empleado obtenerMayorSalario() {
+        return empleados.stream().max(Comparator.comparing(Empleado::calcularSalarioNeto)).orElse(null);
     }
 
-    public Empleado empleadoMayorSalario() {
-        if (empleados.isEmpty()) return null;
-
-        Empleado mayor = empleados.get(0);
-        for (Empleado e : empleados) {
-            if (e.calcularSalarioNeto() > mayor.calcularSalarioNeto()) {
-                mayor = e;
-            }
-        }
-        return mayor;
-    }
-
-    public float nominaTotal() {
-        float total = 0;
-        for (Empleado e : empleados) {
-            total += e.calcularSalarioNeto();
-        }
-        return total;
+    public float calcularNominaTotal() {
+        return (float) empleados.stream().mapToDouble(Empleado::calcularSalarioNeto).sum();
     }
 
     public void mostrarResumenes() {
-        for (Empleado e : empleados) {
-            System.out.println(e.generarResumenPago());
-        }
+        empleados.forEach(e -> System.out.println(e.generarResumenPago()));
     }
 }
